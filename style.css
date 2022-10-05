@@ -80,7 +80,6 @@ body {
 
 .button {
 	all: unset;
-	cursor: pointer;
 	font-family: 'Kdam Thmor Pro', sans-serif;
 	height: 3.7rem;
 	width: 3.7rem;
@@ -90,13 +89,19 @@ body {
 	border-radius: 1rem;
 	text-align: center;
 	font-size: 3rem;
+	cursor: pointer;
 }
 
 .number,
-.decimal {
+.decimal,
+.negative {
 	color: white;
-	box-shadow: 0 0 1rem #fff;
 	box-shadow: 0 0 1rem #f89b29;
+}
+
+.random {
+	color: white;
+	box-shadow: 0 0 1rem #d100d1;
 }
 
 .operator {
@@ -114,13 +119,28 @@ body {
 	box-shadow: 0 0 1rem #de1a1a;
 }
 
-.number:hover {
+.number:hover,
+.decimal:hover,
+.negative:hover {
 	box-shadow: 0 0 1rem #fff;
 	color: #f89b29;
 }
 
-.number:active {
+.number:active,
+.decimal:active,
+.negative:active {
+	scale: 1.1;
 	box-shadow: 0 0 1rem #f89b29;
+}
+
+.random:hover {
+	box-shadow: 0 0 1rem #fff;
+	color: #d100d1;
+}
+
+.random:active {
+	scale: 1.1;
+	box-shadow: 0 0 1rem #d100d1;
 }
 
 .operator:hover {
@@ -129,6 +149,7 @@ body {
 }
 
 .operator:active {
+	scale: 1.1;
 	box-shadow: 0 0 1rem #ff0f7b;
 }
 
@@ -138,6 +159,7 @@ body {
 }
 
 .equals:active {
+	scale: 1.1;
 	box-shadow: 0 0 1rem #04e762;
 }
 
@@ -147,5 +169,6 @@ body {
 }
 
 .clear:active {
+	scale: 1.1;
 	box-shadow: 0 0 1rem #de1a1a;
 }
