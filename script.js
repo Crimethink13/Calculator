@@ -1,8 +1,10 @@
 const numberBtn = document.querySelectorAll('.number');
+const negativeBtn = document.querySelector('.negative');
 const operatorBtn = document.querySelectorAll('.operator');
 const equalsBtn = document.querySelector('.equals');
 const clearBtn = document.querySelector('.clear');
 const backspaceBtn = document.querySelector('.backspace');
+const randomBtn = document.querySelector('.random');
 const keyPress = document.querySelectorAll('.button');
 const display = document.querySelector('.display');
 const historyScreen = document.querySelector('.history-screen');
@@ -15,6 +17,8 @@ let secondNumber = '';
 
 document.addEventListener('keydown', keyboardInput);
 backspaceBtn.onclick = () => backspace();
+negativeBtn.onclick = () => addNegativeSymbol();
+randomBtn.onclick = () => randomEquation();
 clearBtn.onclick = () => clearAll();
 equalsBtn.onclick = () => evaluate();
 decimalPoint.onclick = () => addDecimal();
@@ -54,7 +58,7 @@ function setOperator(selectedOperator) {
 
 	firstNumber = currentScreen.textContent;
 	operator = selectedOperator;
-	historyScreen.textContent = `${firstNumber}${operator}`;
+	historyScreen.textContent = `${firstNumber} ${operator}`;
 	currentScreen.classList.remove('result');
 	clearCurrent();
 }
@@ -63,8 +67,21 @@ function setOperator(selectedOperator) {
 function addDecimal() {
 	if (currentScreen.classList.contains('result')) clearAll();
 	if (currentScreen.textContent === '') currentScreen.textContent = '0';
+	if (currentScreen.textContent === '-') currentScreen.textContent += '0';
 	if (currentScreen.textContent.includes('.')) return;
+
 	currentScreen.textContent += '.';
+}
+
+//? Add negative symbol to number
+function addNegativeSymbol() {
+	if (currentScreen.classList.contains('result')) clearAll();
+	if (currentScreen.textContent === '0') currentScreen.textContent = '-';
+	if (currentScreen.textContent !== '') return;
+	if (currentScreen.textContent.includes('.')) return;
+	if (currentScreen.textContent.includes('-')) return;
+
+	currentScreen.textContent += '-';
 }
 
 //? Evaluate equation using operate function
@@ -77,7 +94,7 @@ function evaluate() {
 	if (currentScreen.textContent === 'Error') return;
 
 	secondNumber = currentScreen.textContent;
-	historyScreen.textContent += `${secondNumber}`;
+	historyScreen.textContent += ` ${secondNumber}`;
 	currentScreen.textContent = roundNumber(operate(firstNumber, operator, secondNumber));
 	currentScreen.classList.add('result');
 	operator = null;
@@ -120,6 +137,7 @@ function convertOperator(keyboardSelection) {
 	if (keyboardSelection === '+') return '+';
 }
 
+//? Backspace function
 function backspace() {
 	if (currentScreen.textContent === 'Error') clearCurrent();
 	if (currentScreen.classList.contains('result')) return;
@@ -129,6 +147,7 @@ function backspace() {
 	}
 }
 
+//? Clear everything
 function clearAll() {
 	currentScreen.classList.remove('result');
 	historyScreen.textContent = '';
@@ -138,6 +157,29 @@ function clearAll() {
 	secondNumber = '';
 }
 
+//? Clear current screen
 function clearCurrent() {
 	currentScreen.textContent = '';
+}
+
+//? Display random number
+function randomEquation() {
+	if (currentScreen.classList.contains('result')) clearAll();
+
+	min = Math.ceil(-1000);
+	max = Math.floor(1000);
+	currentScreen.textContent = Math.floor(Math.random() * (max - min + 1) + min);
+
+	//? Display and evaluate random equation
+	// const operators = [ '+', '−', '×', '÷' ];
+	// const randomOperator = Math.floor(Math.random() * operators.length);
+	// operator = operators[randomOperator];
+	// firstNumber = Math.floor(Math.random() * (max - min + 1) + min);
+	// secondNumber = Math.floor(Math.random() * (max - min + 1) + min);
+
+	// historyScreen.textContent = `${firstNumber} ${operator} ${secondNumber}`;
+	// currentScreen.textContent = roundNumber(operate(firstNumber, operator, secondNumber));
+	// currentScreen.classList.add('result');
+
+	// currentScreen.textContent = `${Math.floor(Math.random() * (max - min) + min)}`;
 }
